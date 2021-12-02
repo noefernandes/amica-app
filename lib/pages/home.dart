@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -6,12 +7,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // ignore: non_constant_identifier_names
   does_nothing() {}
 
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      Image(
+      const Image(
         image: AssetImage('imagens/background.png'),
         fit: BoxFit.cover,
         height: double.infinity,
@@ -25,13 +27,12 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Text(
                   "Faça um novo amigo!",
-                  style: TextStyle(
-                      fontFamily: 'Baloo_2',
+                  style: GoogleFonts.baloo(
                       fontSize: 30.0,
-                      color: Color(0xffffffff),
+                      color: const Color(0xffffffff),
                       decoration: TextDecoration.none),
                 ),
               ),
@@ -41,13 +42,12 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Text(
                   "Adote um pet hoje!",
-                  style: TextStyle(
-                      fontFamily: 'Baloo_2',
+                  style: GoogleFonts.baloo(                      
                       fontSize: 25.0,
-                      color: Color(0xff2E3359),
+                      color: const Color(0xff2E3359),
                       decoration: TextDecoration.none),
                 ),
               ),
@@ -57,11 +57,13 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: ElevatedButton(
                   child: Text(
                     "Let's go!",
-                    style: TextStyle(fontSize: 40.0, color: Colors.white),
+                    style: GoogleFonts.baloo(
+                      fontSize: 40.0, color: Colors.white
+                    ),
                   ),
                   onPressed: () => does_nothing,
                 ),
