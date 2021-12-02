@@ -1,5 +1,5 @@
-name: doacao_pratica
-description: A new Flutter project.
+name: amica
+description: Adote um amigo.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -37,8 +37,15 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.9.2
   flutter_svg: ^0.23.0+1
   google_fonts: ^2.1.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "imagens/ico.png"
+  adaptive_icon_background: 0xff4FA9A7
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -63,6 +70,7 @@ flutter:
     - imagens/logo.svg
     - imagens/background.png
     - imagens/dog.png
+    - imagens/ico.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

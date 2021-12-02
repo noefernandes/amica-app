@@ -1,4 +1,4 @@
-package com.example.doacao_pratica
+package com.example.amica
 
 import io.flutter.embedding.android.FlutterActivity
 

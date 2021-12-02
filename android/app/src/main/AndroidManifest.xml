@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.doacao_pratica">
+    package="com.example.amica">
    <application
-        android:label="doacao_pratica"
-        android:icon="@mipmap/ic_launcher">
+        android:label="amica"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -1,4 +1,4 @@
-# doacao_pratica
+# amica
 
 A new Flutter project.
 
