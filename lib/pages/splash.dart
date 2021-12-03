@@ -35,11 +35,12 @@ class _SplashState extends State<Splash> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height),
           color: const Color(0xff4FA9A7),
-        ),PositionedDirectional(
-            bottom: -150,
-            end: 0,
-            child: SizedBox(
-                child: Transform.rotate(
+        ),
+        PositionedDirectional(
+          bottom: -150,
+          end: 0,
+          child: SizedBox(
+            child: Transform.rotate(
               angle: 3.14 / 4,
               child: Container(
                 constraints: BoxConstraints.tightForFinite(
@@ -50,14 +51,17 @@ class _SplashState extends State<Splash> {
                   borderRadius: BorderRadius.circular(100),
                 ),
               ),
-            ))),
+            ),
+          ),
+        ),
         PositionedDirectional(
-            bottom: 0,
-            end: MediaQuery.of(context).size.width * .25,
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.45,
-              child: Image.asset('imagens/dog.png'),
-            )),        
+          bottom: 0,
+          end: MediaQuery.of(context).size.width * .25,
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height * 0.45,
+            child: Image.asset('imagens/dog.png'),
+          ),
+        ),
         Scaffold(
             backgroundColor: const Color(0x004FA9A7),
             body: Center(
@@ -65,19 +69,18 @@ class _SplashState extends State<Splash> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 70, 0, 0),
-                  child:
-                      SvgPicture.asset('imagens/logo.svg', color: Colors.white),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Text(
-                    'Amica',
-                    style: GoogleFonts.aclonica(
-                        fontStyle: FontStyle.normal,
-                        color: Colors.white,
-                        fontSize: 50),
-                  ),
+                    padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.width * .15,
+                      child: SvgPicture.asset('imagens/logo.svg',
+                        color: Colors.white)
+                    )),
+                Text(
+                  'Amica',
+                  style: GoogleFonts.aclonica(
+                      fontStyle: FontStyle.normal,
+                      color: Colors.white,
+                      fontSize: 50),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(0.0),
@@ -93,9 +96,9 @@ class _SplashState extends State<Splash> {
                   padding: const EdgeInsets.all(0.0),
                   child: Text(
                     'Adote um pet hoje',
-                    style: GoogleFonts.athiti(
+                    style: GoogleFonts.aBeeZee(
                         fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w800,
                         color: const Color(0xFF2E3359),
                         fontSize: 20),
                   ),
