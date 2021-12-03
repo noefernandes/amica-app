@@ -17,13 +17,13 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
 
-    // Timer(const Duration(seconds: 150), () {
-    //   Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //         builder: (context) => Login(),
-    //       ));
-    // });
+    Timer(const Duration(seconds: 3), () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Login(),
+          ));
+    });
   }
 
   @override
