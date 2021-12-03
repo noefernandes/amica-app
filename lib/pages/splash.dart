@@ -32,45 +32,32 @@ class _SplashState extends State<Splash> {
       children: <Widget>[
         Container(
           constraints: BoxConstraints.tightForFinite(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height
-          ),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height),
           color: const Color(0xff4FA9A7),
-        ),
-        Positioned(
-          bottom: MediaQuery.of(context).size.height*-0.7,
-          left: MediaQuery.of(context).size.width*-0.3,
-          child: Transform.rotate(
-            angle: 3.14/4,
-            child: Container(
-              constraints: BoxConstraints.tightForFinite(
-                width: MediaQuery.of(context).size.width*1.5,
-                height: MediaQuery.of(context).size.height*1
+        ),PositionedDirectional(
+            bottom: -150,
+            end: 0,
+            child: SizedBox(
+                child: Transform.rotate(
+              angle: 3.14 / 4,
+              child: Container(
+                constraints: BoxConstraints.tightForFinite(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.width),
+                decoration: BoxDecoration(
+                  color: const Color(0X66FFFFFF),
+                  borderRadius: BorderRadius.circular(100),
+                ),
               ),
-              decoration: BoxDecoration(
-                color: const Color(0X66FFFFFF),
-                borderRadius: BorderRadius.circular(120),
-              ),
-              alignment: Alignment.center,
-
-            ),
-          )
-        ),
-        Positioned(
-          bottom: MediaQuery.of(context).size.height*-.3,
-          left: MediaQuery.of(context).size.width*-.30,
-          child: Container(
-            constraints: BoxConstraints.tightForFinite(
-              width: MediaQuery.of(context).size.height,
-              height: MediaQuery.of(context).size.height
-            ),
-            alignment: Alignment.center,
-            child: Transform.scale(
-              scale: .8,
+            ))),
+        PositionedDirectional(
+            bottom: 0,
+            end: MediaQuery.of(context).size.width * .25,
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.45,
               child: Image.asset('imagens/dog.png'),
-            ),
-          ),
-        ),
+            )),        
         Scaffold(
             backgroundColor: const Color(0x004FA9A7),
             body: Center(
@@ -78,8 +65,9 @@ class _SplashState extends State<Splash> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0,70,0,0),
-                  child: SvgPicture.asset('imagens/logo.svg', color: Colors.white),
+                  padding: const EdgeInsets.fromLTRB(0, 70, 0, 0),
+                  child:
+                      SvgPicture.asset('imagens/logo.svg', color: Colors.white),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(2.0),
