@@ -46,9 +46,11 @@ class _SplashState extends State<Splash> {
                 constraints: BoxConstraints.tightForFinite(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.width),
-                decoration: BoxDecoration(
-                  color: const Color(0X66FFFFFF),
-                  borderRadius: BorderRadius.circular(100),
+                decoration: const BoxDecoration(
+                  color: Color(0X3FFFFFFF),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(220),
+                  ),
                 ),
               ),
             ),
@@ -69,12 +71,11 @@ class _SplashState extends State<Splash> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 120, 0, 0),
                     child: SizedBox(
-                      height: MediaQuery.of(context).size.width * .15,
-                      child: SvgPicture.asset('imagens/logo.svg',
-                        color: Colors.white)
-                    )),
+                        height: MediaQuery.of(context).size.width * .15,
+                        child: SvgPicture.asset('imagens/logo.svg',
+                            color: Colors.white))),
                 Text(
                   'Amica',
                   style: GoogleFonts.aclonica(
