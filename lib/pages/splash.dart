@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:lottie/lottie.dart';
 import 'login.dart';
 
 class Splash extends StatefulWidget {
@@ -17,7 +17,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 7), () {
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -58,11 +58,10 @@ class _SplashState extends State<Splash> {
         ),
         PositionedDirectional(
           bottom: 0,
-          end: MediaQuery.of(context).size.width * .25,
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.45,
-            child: Image.asset('imagens/dog.png'),
-          ),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Lottie.asset("lottie/dog.json"),
+            )
         ),
         Scaffold(
             backgroundColor: const Color(0x004FA9A7),

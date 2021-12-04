@@ -41,6 +41,7 @@ dev_dependencies:
   flutter_svg: ^0.23.0+1
   google_fonts: ^2.1.0
   flutter_lints: ^1.0.4
+  lottie: ^1.2.1
 
 flutter_icons:
   android: true
@@ -72,6 +73,7 @@ flutter:
     - imagens/background.png
     - imagens/dog.png
     - imagens/ico.png
+    - lottie/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
