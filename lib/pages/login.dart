@@ -1,4 +1,6 @@
+
 import 'package:amica/pages/signup.dart';
+import 'package:amica/widgtes/input_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -37,41 +39,20 @@ class _LoginState extends State<Login> {
                 SvgPicture.asset('imagens/logo.svg', color: Colors.white),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 15.0),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        filled: true,
-                        fillColor: Colors.white,
-                        labelText: "Nome do usuário",
-                        labelStyle: TextStyle(color: Colors.grey[600])),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white, fontSize: 25.0),
-                    controller: usernameController,
-                    validator: (value) {
-                      if (value!.isEmpty)
-                        return "Insira o seu nome de usuário!";
-                    },
+                  child: InputText(
+                    textInputType: TextInputType.emailAddress,
+                    labelText: "Nome do usuário",
+                    validator: "Insira o seu nome de usuário!",
+                    prefixIcon: Icons.email
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        filled: true,
-                        fillColor: Colors.white,
-                        labelText: "Senha",
-                        labelStyle: TextStyle(color: Colors.grey[600])),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white, fontSize: 25.0),
-                    controller: passwordController,
-                    validator: (value) {
-                      if (value!.isEmpty) return "Insira sua senha!";
-                    },
+                  child: InputText(
+                    textInputType: TextInputType.visiblePassword,
+                    labelText: "Senha",
+                    validator: "Inserir senha!",
+                    prefixIcon: Icons.lock
                   ),
                 ),
                 Padding(
