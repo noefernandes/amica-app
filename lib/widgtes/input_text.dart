@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class InputText extends StatefulWidget {
   String labelText;
   String? validator;
-  TextInputType? textInputType;
+  final TextInputType? textInputType;
   final IconData? prefixIcon;
   InputText({Key? key, required this.labelText, this.validator, this.textInputType, this.prefixIcon }) : super(key: key);
 
@@ -17,7 +17,6 @@ class _InputTextState extends State<InputText> {
   InputDecoration buildTextInputDecoration(String labelText, TextEditingController controller, Icon  prefixIcon) {
     return InputDecoration(
       labelText: widget.labelText,
-      
       labelStyle: const TextStyle(
         color: Colors.black,
         height: 0,
@@ -25,16 +24,15 @@ class _InputTextState extends State<InputText> {
       ),
       fillColor: Colors.grey[50],
       filled: true,
-      enabledBorder: const OutlineInputBorder(
+      enabledBorder: const UnderlineInputBorder(
         borderSide: BorderSide(
           color: Colors.white,
-          width: 1.5,
         ),
       ),
-      focusedBorder: const OutlineInputBorder(
+      focusedBorder: const UnderlineInputBorder(
         borderSide: BorderSide(
-          color: Colors.black,
-          width: 1,
+          color: Colors.blue,
+          width: 2,
         ),
       ),
       suffixIcon: InkWell(
@@ -47,7 +45,12 @@ class _InputTextState extends State<InputText> {
 
   @override
   Widget build(BuildContext context) {
+    
     return TextFormField(
+      keyboardType: widget.textInputType,
+      obscureText: widget.textInputType == TextInputType.visiblePassword,
+      enableSuggestions: widget.textInputType != TextInputType.visiblePassword,
+      autocorrect: widget.textInputType != TextInputType.visiblePassword,
       textAlignVertical: TextAlignVertical.center,
       cursorColor: const Color(0xff4FA9A7),
       style: const TextStyle(color: Colors.black, fontSize: 22),
