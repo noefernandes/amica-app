@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  const Home({ Key? key }) : super(key: key);
+class Settings extends StatefulWidget {
+  const Settings({ Key? key }) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _SettingsState createState() => _SettingsState();
 }
 
-class _HomeState extends State<Home> {
+class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return const Center(
       child: Text(
-        'Home Page',
+        'Settings Page',
         style: TextStyle(
           color: Colors.white,
           fontSize: 100,

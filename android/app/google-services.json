@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "150192726027",
+    "project_id": "amicas-6209f",
+    "storage_bucket": "amicas-6209f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150192726027:android:2177cd8e5ecaafb076e70e",
+        "android_client_info": {
+          "package_name": "com.example.amica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150192726027-bjf720598pad5c33sku35rlp818j94js.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcmBINJhy6NVvj1bXeAeFNigK-mgET8e4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "150192726027-bjf720598pad5c33sku35rlp818j94js.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
