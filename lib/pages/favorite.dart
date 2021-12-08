@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  const Home({ Key? key }) : super(key: key);
+class Favorite extends StatefulWidget {
+  const Favorite({ Key? key }) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _FavoriteState createState() => _FavoriteState();
 }
 
-class _HomeState extends State<Home> {
+class _FavoriteState extends State<Favorite> {
   @override
   Widget build(BuildContext context) {
     return const Center(
       child: Text(
-        'Home Page',
+        'Favorite Page',
         style: TextStyle(
           color: Colors.white,
           fontSize: 100,
