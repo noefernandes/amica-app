@@ -16,10 +16,10 @@ class _MenuState extends State<Menu> {
   int index = 0;
 
   final pages = [
-    Home(),
-    Favorite(),
-    Settings(),
-    Person()
+    const Home(),
+    const Favorite(),
+    const Settings(),
+    const Person()
   ];
 
   // ignore: non_constant_identifier_names
@@ -36,11 +36,11 @@ class _MenuState extends State<Menu> {
     ];
 
     return Scaffold(
+      // appBar: AppBar(
+      //   elevation: 0,
+      // ),
       extendBody: false,
       backgroundColor: Colors.blue,
-      appBar: AppBar(
-        elevation: 0,
-      ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           iconTheme: const IconThemeData(color: Colors.black87)
