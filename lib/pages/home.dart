@@ -28,46 +28,54 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    
+    return SizedBox(
       height: MediaQuery.of(context).size.width / 4 + 30,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(5,35,5,10),
+        padding: const EdgeInsets.fromLTRB(5, 35, 5, 10),
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemCount: filters.length,
           separatorBuilder: (context, _) => const SizedBox(width: 12),
-          itemBuilder: (context, index) => buildMenu(index),
+          itemBuilder: (context, index) { 
+            Color cor = active == index ? const Color(0Xffffffff) : const Color(0xff4FA9A7);
+            return buildMenu(index, cor);
+          },
         ),
       ),
     );
   }
 
-  Widget buildMenu(i) => SizedBox(
+  Widget buildMenu(i, cor) => SizedBox(
       width: MediaQuery.of(context).size.width / 4,
-      child: 
-      ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(active == i ? Colors.white : Colors.black),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ))),
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          shadowColor: Color(0xFFFF8C3B),
+          backgroundColor: active != i ? Colors.white : Colors.transparent,
+          side: BorderSide(
+              width: 2, color: active == i ? Colors.white : Colors.transparent),
+        ),
         onPressed: () {
           setState(() {
             active = i;
           });
-        },
+        },        
         child: Column(
           children: [
             SizedBox(
               height: 60,
-              child: SvgPicture.asset(filters[i].icon, color: active != i ?  Colors.white : Colors.black),),
+              child: SvgPicture.asset(
+                filters[i].icon,
+                color: cor,
+              ),
+            ),
             Text(
               filters[i].name,
-              style: TextStyle(color: active != i ?  Colors.white : Colors.black, fontSize: 14),
+              style: TextStyle(
+                  color: cor,
+                  fontSize: 14),
             )
           ],
         ),
-      )
-    );
+      ));
 }

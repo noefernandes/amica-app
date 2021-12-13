@@ -40,7 +40,7 @@ class _MenuState extends State<Menu> {
       //   elevation: 0,
       // ),
       extendBody: false,
-      backgroundColor: Colors.blue,
+      backgroundColor: const Color(0xff4FA9A7),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           iconTheme: const IconThemeData(color: Colors.black87)
@@ -49,6 +49,7 @@ class _MenuState extends State<Menu> {
           height: 55,
           index: index,
           items: items,
+          backgroundColor: Colors.transparent,
           onTap: (index) => setState(() => this.index = index),
         ),
       ),
