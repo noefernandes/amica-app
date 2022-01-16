@@ -1,3 +1,4 @@
+import 'package:amica/widgtes/card_pet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -11,71 +12,103 @@ class Home extends StatefulWidget {
 // Image.network('https://cataas.com/cat'),
 
 class Menu {
-  const Menu(this.name, this.icon);
+  const Menu(this.key, this.name, this.icon);
+  final String key;
   final String name;
   final String icon;
 }
 
 class _HomeState extends State<Home> {
   final filters = [
-    const Menu('Cachorros', 'imagens/svg/dog.svg'),
-    const Menu('Gatos', 'imagens/svg/cat.svg'),
-    const Menu('Passáros', 'imagens/svg/bird.svg'),
-    const Menu('Cobras', 'imagens/svg/snake.svg'),
+    const Menu('dog ', 'Cachorros', 'imagens/svg/dog.svg'),
+    const Menu('cat', 'Gatos', 'imagens/svg/cat.svg'),
+    const Menu('bird', 'Passáros', 'imagens/svg/bird.svg'),
+    const Menu('snake', 'Cobras', 'imagens/svg/snake.svg'),
   ];
 
   int active = 0;
 
   @override
   Widget build(BuildContext context) {
-    
-    return SizedBox(
-      height: MediaQuery.of(context).size.width / 4 + 30,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(5, 35, 5, 10),
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemCount: filters.length,
-          separatorBuilder: (context, _) => const SizedBox(width: 12),
-          itemBuilder: (context, index) { 
-            Color cor = active == index ? const Color(0Xffffffff) : const Color(0xff4FA9A7);
-            return buildMenu(index, cor);
-          },
+    return Column(
+      children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.width / 4 + 20,
+          child: SafeArea(
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: filters.length,
+              separatorBuilder: (context, _) => const SizedBox(width: 0),
+              itemBuilder: (context, index) {
+                Color cor = active == index
+                    ? const Color(0Xffffffff)
+                    : const Color(0xff4FA9A7);
+                return buildMenu(index, cor);
+              },
+            ),
+          ),
         ),
-      ),
+        SizedBox(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height - 190,
+          child: SingleChildScrollView(
+            child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                CardPet(),
+                CardPet(),
+                CardPet(),
+                CardPet(),
+              ],
+            ),
+          )
+        )
+      ],
     );
   }
 
-  Widget buildMenu(i, cor) => SizedBox(
-      width: MediaQuery.of(context).size.width / 4,
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          shadowColor: const Color(0xFFFF8C3B),
-          backgroundColor: active != i ? Colors.white : Colors.transparent,
-          side: BorderSide(
-              width: 2, color: active == i ? Colors.white : Colors.transparent),
-        ),
-        onPressed: () {
-          setState(() {
-            active = i;
-          });
-        },        
-        child: Column(
-          children: [
-            SizedBox(
-              height: 60,
-              child: SvgPicture.asset(
-                filters[i].icon,
-                color: cor,
+  Widget buildMenu(i, cor) => Padding(
+        padding: const EdgeInsets.all(5),
+        child: SizedBox(
+            width: MediaQuery.of(context).size.width / 4,
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                shadowColor: const Color(0xFFFF8C3B),
+                backgroundColor:
+                    active != i ? Colors.white : Colors.transparent,
+                side: BorderSide(
+                    width: 2,
+                    color: active == i ? Colors.white : Colors.transparent),
               ),
-            ),
-            Text(
-              filters[i].name,
-              style: TextStyle(
-                  color: cor,
-                  fontSize: 14),
-            )
-          ],
-        ),
-      ));
+              onPressed: () {
+                setState(() {
+                  active = i;
+                });
+                print(filters[i].key);
+              },
+              child: Column(
+                children: [
+                  Flexible(
+                    child: Container(),
+                    flex: 1,
+                  ),
+                  SizedBox(
+                    height: 60,
+                    child: SvgPicture.asset(
+                      filters[i].icon,
+                      color: cor,
+                    ),
+                  ),
+                  Text(
+                    filters[i].name,
+                    style: TextStyle(color: cor, fontSize: 14),
+                  ),
+                  Flexible(
+                    child: Container(),
+                    flex: 1,
+                  ),
+                ],
+              ),
+            )),
+      );
 }
