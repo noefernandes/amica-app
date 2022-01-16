@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
       width: MediaQuery.of(context).size.width / 4,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          shadowColor: Color(0xFFFF8C3B),
+          shadowColor: const Color(0xFFFF8C3B),
           backgroundColor: active != i ? Colors.white : Colors.transparent,
           side: BorderSide(
               width: 2, color: active == i ? Colors.white : Colors.transparent),
