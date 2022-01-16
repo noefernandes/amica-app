@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:amica/pages/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,7 +21,7 @@ class _SplashState extends State<Splash> {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => Menu(),
+            builder: (context) => const Login(),
           ));
     });
   }

@@ -1,16 +1,19 @@
+import 'package:amica/widgtes/input_text.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Signup extends StatefulWidget {
+  const Signup({Key? key}) : super(key: key);
   @override
   _SignupState createState() => _SignupState();
 }
 
 class _SignupState extends State<Signup> {
   TextEditingController nameController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController repeatPasswordController = TextEditingController();
   TextEditingController speciesController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final String _textInfo = "";
@@ -23,12 +26,12 @@ class _SignupState extends State<Signup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: new Text(
+          title: const Text(
             "Cadastre-se",
-            style: new TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white),
           ),
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -43,112 +46,86 @@ class _SignupState extends State<Signup> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                SvgPicture.asset('imagens/logo.svg', color: Colors.white),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 15.0),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        filled: true,
-                        fillColor: Colors.white,
-                        labelText: "Nome completo",
-                        labelStyle: TextStyle(color: Colors.grey[600])),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white, fontSize: 25.0),
-                    controller: nameController,
-                    validator: (value) {
-                      if (value!.isEmpty) return "Insira o seu nome completo!";
-                    },
+                Column(children: <Widget>[
+                  SizedBox(
+                    child: SvgPicture.asset('imagens/logo.svg',
+                        color: Colors.white),
+                    height: MediaQuery.of(context).size.width * .15,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        filled: true,
-                        fillColor: Colors.white,
-                        labelText: "Nome do usuário",
-                        labelStyle: TextStyle(color: Colors.grey[600])),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white, fontSize: 25.0),
-                    controller: usernameController,
-                    validator: (value) {
-                      if (value!.isEmpty)
-                        return "Insira o seu nome de usuário!";
-                    },
+                  Text(
+                    'Amica',
+                    style: GoogleFonts.aclonica(
+                        fontStyle: FontStyle.normal,
+                        color: Colors.white,
+                        fontSize: 50),
                   ),
+                ]),
+                const SizedBox(
+                  height: 24,
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 25.0, 20.0, 15.0),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        filled: true,
-                        fillColor: Colors.white,
-                        labelText: "Senha",
-                        labelStyle: TextStyle(color: Colors.grey[600])),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white, fontSize: 25.0),
-                    controller: passwordController,
-                    validator: (value) {
-                      if (value!.isEmpty) return "Insira sua senha!";
-                    },
-                  ),
+                TextFielInput(
+                  hintText: 'Nome Completo',
+                  textInputType: TextInputType.name,
+                  textEditingController: nameController,
+                  icon: const Icon(Icons.person),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        filled: true,
-                        fillColor: Colors.white,
-                        labelText: "Confirmar senha",
-                        labelStyle: TextStyle(color: Colors.grey[600])),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white, fontSize: 25.0),
-                    controller: passwordController,
-                    validator: (value) {
-                      if (value!.isEmpty) return "Repita sua senha!";
-                    },
-                  ),
+                const SizedBox(
+                  height: 24,
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(70.0, 15.0, 70.0, 15.0),
-                  child: ButtonTheme(
-                      height: 50.0,
-                      highlightColor: Colors.amber,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors.redAccent),
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                    const EdgeInsets.fromLTRB(
-                                        20.0, 15.0, 20.0, 15.0)),
-                            shape:
-                                MaterialStateProperty.all<RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(40),
-                                        side: const BorderSide(
-                                            color: Colors.redAccent)))),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) _entrar();
-                        },
-                        child: const Text(
-                          "Criar",
-                          style: TextStyle(color: Colors.white, fontSize: 25.0),
-                        ),
-                      )),
+                TextFielInput(
+                  hintText: 'Email',
+                  textInputType: TextInputType.name,
+                  textEditingController: emailController,
+                  icon: const Icon(Icons.email),
                 ),
+                const SizedBox(
+                  height: 24,
+                ),
+                TextFielInput(
+                  hintText: 'Senha',
+                  textInputType: TextInputType.name,
+                  textEditingController: passwordController,
+                  icon: const Icon(Icons.password),
+                  isPass: true
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                TextFielInput(
+                  hintText: 'Repita a Senha',
+                  textInputType: TextInputType.name,
+                  textEditingController: repeatPasswordController,
+                  icon: const Icon(Icons.password),
+                  isPass: true
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                ButtonTheme(
+                    height: 50.0,
+                    highlightColor: Colors.amber,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.redAccent),
+                          padding:
+                              MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                  const EdgeInsets.fromLTRB(
+                                      20.0, 15.0, 20.0, 15.0)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      side: const BorderSide(
+                                          color: Colors.redAccent)))),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) _entrar();
+                      },
+                      child: const Text(
+                        "Criar",
+                        style: TextStyle(color: Colors.white, fontSize: 25.0),
+                      ),
+                    )),
                 Text(
                   _textInfo,
                   textAlign: TextAlign.center,
