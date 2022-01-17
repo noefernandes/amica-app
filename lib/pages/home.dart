@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
     return Column(
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.width / 4 + 20,
+          height: 130,
           child: SafeArea(
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
@@ -49,20 +49,19 @@ class _HomeState extends State<Home> {
           ),
         ),
         SizedBox(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height - 190,
-          child: SingleChildScrollView(
-            child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                CardPet(),
-                CardPet(),
-                CardPet(),
-                CardPet(),
-              ],
-            ),
-          )
-        )
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height - 190,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  CardPet(),
+                  CardPet(),
+                  CardPet(),
+                  CardPet(),
+                ],
+              ),
+            ))
       ],
     );
   }
@@ -70,7 +69,7 @@ class _HomeState extends State<Home> {
   Widget buildMenu(i, cor) => Padding(
         padding: const EdgeInsets.all(5),
         child: SizedBox(
-            width: MediaQuery.of(context).size.width / 4,
+            width: 100,
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
                 shadowColor: const Color(0xFFFF8C3B),
