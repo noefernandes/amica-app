@@ -27,30 +27,29 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  cloud_firestore: ^3.1.6
+  cupertino_icons: ^1.0.2
+  firebase_auth: ^3.3.3
+  firebase_core: ^1.11.0
+  firebase_storage: ^10.2.5
   flutter:
     sdk: flutter
-  firebase_auth: ^3.3.3
-  
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
 
 dev_dependencies:
+  curved_navigation_bar: ^1.0.1
+  flutter_launcher_icons: ^0.9.2
+  flutter_lints: ^1.0.4
+  flutter_svg: ^0.23.0+1
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.9.2
-  flutter_svg: ^0.23.0+1
   google_fonts: ^2.1.0
-  flutter_lints: ^1.0.4
   lottie: ^1.2.1
-  curved_navigation_bar: ^1.0.1
 
 flutter_icons:
   android: true
   ios: true
   image_path: "imagens/ico.png"
-  adaptive_icon_background: 0xff4FA9A7
+  adaptive_icon_background: 0xff4fa9a7
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -61,7 +60,6 @@ flutter_icons:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
 
@@ -76,13 +74,10 @@ flutter:
     - imagens/svg/
     - lottie/
   #   - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
