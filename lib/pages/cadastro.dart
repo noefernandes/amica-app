@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({ Key? key }) : super(key: key);
+class Cadastro extends StatefulWidget {
+  const Cadastro({Key? key}) : super(key: key);
 
   @override
-  _SettingsState createState() => _SettingsState();
+  _CadastroState createState() => _CadastroState();
 }
 
-class _SettingsState extends State<Settings> {
+class _CadastroState extends State<Cadastro> {
   @override
   Widget build(BuildContext context) {
     return const Center(
       child: Text(
-        'Settings Page',
+        'Cadastro Page',
         style: TextStyle(
           color: Colors.white,
           fontSize: 100,
