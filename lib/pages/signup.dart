@@ -1,4 +1,7 @@
+import 'package:amica/pages/home.dart';
+import 'package:amica/pages/temp.dart';
 import 'package:amica/resources/auth_methods.dart';
+import 'package:amica/utils/utils.dart';
 import 'package:amica/widgtes/input_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,14 +23,6 @@ class _SignupState extends State<Signup> {
   final String _textInfo = "";
   bool _isLoading = false;
 
-  showSnackBar(BuildContext context, String text) {
-    return ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(text),
-      ),
-    );
-  }
-
   Future<void> _entrar() async {
     setState(() {
       _isLoading = true;
@@ -40,6 +35,11 @@ class _SignupState extends State<Signup> {
       setState(() {
         _isLoading = false;
       });
+
+      print("Redirecionando");
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const Temp()),
+      );
     } else {
       setState(() {
         _isLoading = false;

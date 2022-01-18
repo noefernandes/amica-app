@@ -22,12 +22,39 @@ class AuthMethods {
         await _firestore.collection('users').doc(cred.user!.uid).set(
             {'email': email, 'password': password, 'bio': '', 'posts': []});
 
-        res = 'Sucesso';
+        res = 'success';
       }
     } catch (err) {
       res = err.toString();
     }
 
     return res;
+  }
+
+  // logar usuario
+  Future<String> loginUser({
+    required String email,
+    required String password,
+  }) async {
+    String res = "Some error Occurred";
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        // logging in user with email and password
+        await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        res = "success";
+      } else {
+        res = "Please enter all the fields";
+      }
+    } catch (err) {
+      return err.toString();
+    }
+    return res;
+  }
+
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 }
