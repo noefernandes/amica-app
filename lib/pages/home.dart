@@ -55,7 +55,10 @@ class _HomeState extends State<Home> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
-                CardPet(),
+                CardPet(id: '1'),
+                CardPet(id: '2'),
+                CardPet(id: '3'),
+                CardPet(id: '4'),
               ],
             ),
           ),

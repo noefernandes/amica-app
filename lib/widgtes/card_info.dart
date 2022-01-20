@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 
 class CardInfo extends StatefulWidget {
-  const CardInfo({Key? key}) : super(key: key);
-
+  final String id;
+  const CardInfo({Key? key, required this.id}) : super(key: key);
   @override
   _CardInfoState createState() => _CardInfoState();
 }
@@ -15,7 +15,7 @@ class _CardInfoState extends State<CardInfo> {
 
   @override
   Widget build(BuildContext context) {
-    const double size = 50;
+    const double size = 30;
     const aimationDuration = Duration(milliseconds: 500);
 
     return Scaffold(
@@ -32,11 +32,10 @@ class _CardInfoState extends State<CardInfo> {
             SizedBox(
               width: double.infinity,
               child: Hero(
-                tag: 'image',
+                tag: 'image'+widget.id,
                 child: Image.network(
                   'https://placeimg.com/640/680/any',
-                  width: MediaQuery.of(context).size.width * 0.4 - 5,
-                  alignment: Alignment.center,
+                  alignment: Alignment.topCenter,
                   fit: BoxFit.fitWidth,
                   height: 250,
                 ),
@@ -45,7 +44,9 @@ class _CardInfoState extends State<CardInfo> {
             Padding(
               padding: const EdgeInsets.all(10),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  // Botão Favorito
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       shape: const StadiumBorder(),
@@ -108,7 +109,52 @@ class _CardInfoState extends State<CardInfo> {
                       ),
                     ),
                   ),
+                  // Fim botão favorito
+                  // Botão Contato
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      shape: const StadiumBorder(),
+                      side: BorderSide(width: 1, color: Colors.blue.shade600),
+                      backgroundColor: Colors.blue.shade600,
+                      fixedSize: const Size.fromWidth(180),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    ),
+                    onPressed: () async {
+                      setState(() => hasBackground = !isLiked);
+                      await Future.delayed(const Duration(milliseconds: 100));
+                      key.currentState!.onTap();
+                    },
+                    child: SizedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Icon(Icons.phone, color: Colors.white,),
+                          ),
+                          Text(
+                            'Contato',
+                            style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Fim botão contato
                 ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: Directionality(
+                textDirection: TextDirection.ltr,
+                child: Text(
+                  'Ola dsadasdasd Ola dsadasdasd Ola dsadasdasd Ola dsadasdasd Ola dsadasdasd Ola dsadasdasd',
+                  style: TextStyle(fontSize: 22),
+                  textAlign: TextAlign.justify,
+                ),
               ),
             )
           ],

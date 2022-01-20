@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'card_info.dart';
 
 class CardPet extends StatelessWidget {
-  const CardPet({Key? key}) : super(key: key);
+  final String id;
+  const CardPet({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class CardPet extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const CardInfo(),
+            builder: (context) => CardInfo(id: id),
           ),
         );
       },
@@ -38,13 +39,13 @@ class CardPet extends StatelessWidget {
                 ),
               ),
             ),
-            Hero(tag: 'image', 
+            Hero(tag: 'image'+id,
               child: Image.network(
                 'https://placeimg.com/640/680/any',
                 width: MediaQuery.of(context).size.width * 0.4 - 5,
                 alignment: Alignment.topCenter,
-                fit: BoxFit.fitHeight,
-                height: 180,
+                fit: BoxFit.fitWidth,
+                height: 100,
               ),
             )
           ],
