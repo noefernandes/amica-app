@@ -1,6 +1,8 @@
 import 'package:amica/pages/favorite.dart';
+import 'package:amica/pages/login.dart';
 import 'package:amica/pages/person.dart';
 import 'package:amica/pages/settings.dart';
+import 'package:amica/resources/auth_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
@@ -25,7 +27,12 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
-
+    void _sair() async {
+      await AuthMethods().signOut();
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const Login()),
+      );
+    }
     final items = <Widget>[
       const Icon(Icons.home, size:30),
       const Icon(Icons.favorite, size:30),
@@ -48,7 +55,19 @@ class _MenuState extends State<Menu> {
           onTap: (index) => setState(() => this.index = index),
         ),
       ),
-      body: pages[index],
+      body: Column(
+        children: [
+          SafeArea( child: Column(
+            children: [
+              ElevatedButton(
+                child: Text("Log out"),
+                onPressed: _sair,
+              ),
+              pages[index],
+            ],
+          ),),
+        ],
+      ),
      );
   }
 }
