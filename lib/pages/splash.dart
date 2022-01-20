@@ -110,7 +110,7 @@ class _SplashState extends State<Splash> {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => isConnected ? const Menu() : const Login(),
+            builder: (context) => isConnected ? const Login() : const Menu(),
           ));
     });
   }

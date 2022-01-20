@@ -1,5 +1,4 @@
-import 'package:amica/pages/home.dart';
-import 'package:amica/pages/temp.dart';
+import 'package:amica/pages/menu.dart';
 import 'package:amica/resources/auth_methods.dart';
 import 'package:amica/utils/utils.dart';
 import 'package:amica/widgtes/input_text.dart';
@@ -38,7 +37,7 @@ class _SignupState extends State<Signup> {
 
       print("Redirecionando");
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const Temp()),
+        MaterialPageRoute(builder: (context) => const Menu()),
       );
     } else {
       setState(() {
