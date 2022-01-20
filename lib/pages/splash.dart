@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'package:amica/pages/login.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'login.dart';
+import 'menu.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -14,16 +16,9 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   @override
-  void initState() {
+  initState() {
     super.initState();
-
-    Timer(const Duration(seconds: 7), () {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Login(),
-          ));
-    });
+    connectionChecker();
   }
 
   @override
@@ -107,5 +102,16 @@ class _SplashState extends State<Splash> {
             )))
       ],
     );
+  }
+
+  Future<void> connectionChecker() async {
+    final bool isConnected = await InternetConnectionChecker().hasConnection;
+    Timer(const Duration(seconds: 7), () {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => isConnected ? const Menu() : const Login(),
+          ));
+    });
   }
 }

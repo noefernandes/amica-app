@@ -23,9 +23,6 @@ class _MenuState extends State<Menu> {
     const Person()
   ];
 
-  // ignore: non_constant_identifier_names
-  does_nothing() {}
-
   @override
   Widget build(BuildContext context) {
 
@@ -37,9 +34,6 @@ class _MenuState extends State<Menu> {
     ];
 
     return Scaffold(
-      // appBar: AppBar(
-      //   elevation: 0,
-      // ),
       extendBody: false,
       backgroundColor: const Color(0xff4FA9A7),
       bottomNavigationBar: Theme(
