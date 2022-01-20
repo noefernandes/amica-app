@@ -1,4 +1,7 @@
+import 'package:amica/pages/menu.dart';
 import 'package:amica/pages/signup.dart';
+import 'package:amica/resources/auth_methods.dart';
+import 'package:amica/utils/utils.dart';
 import 'package:amica/widgtes/input_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,9 +17,31 @@ class _LoginState extends State<Login> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
-  void _entrar() {
-    setState(() {});
+  void _entrar() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    String res = await AuthMethods().loginUser(
+        email: usernameController.text, password: passwordController.text);
+
+    if (res == "success") {
+      setState(() {
+        _isLoading = false;
+      });
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const Menu()),
+      );
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      // show the error
+      showSnackBar(context, res);
+    }
   }
 
   void _goToSignUp() {
@@ -41,13 +66,12 @@ class _LoginState extends State<Login> {
                     const SizedBox(
                       height: 24,
                     ),
-                    Column(
-                      children: <Widget>[
-                    SizedBox(
-                      child: SvgPicture.asset('imagens/logo.svg',
-                          color: Colors.white),
-                      height: MediaQuery.of(context).size.width * .15,
-                    ),
+                    Column(children: <Widget>[
+                      SizedBox(
+                        child: SvgPicture.asset('imagens/logo.svg',
+                            color: Colors.white),
+                        height: MediaQuery.of(context).size.width * .15,
+                      ),
                       Text(
                         'Amica',
                         style: GoogleFonts.aclonica(
@@ -94,10 +118,15 @@ class _LoginState extends State<Login> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) _entrar();
                       },
-                      child: const Text(
-                        "Entrar",
-                        style: TextStyle(color: Colors.white, fontSize: 25.0),
-                      ),
+                      child: !_isLoading
+                          ? const Text(
+                              "Entrar",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 25.0),
+                            )
+                          : const CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
                     ),
                     const SizedBox(
                       height: 24,

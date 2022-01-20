@@ -1,3 +1,6 @@
+import 'package:amica/pages/menu.dart';
+import 'package:amica/resources/auth_methods.dart';
+import 'package:amica/utils/utils.dart';
 import 'package:amica/widgtes/input_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,9 +20,32 @@ class _SignupState extends State<Signup> {
   TextEditingController speciesController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final String _textInfo = "";
+  bool _isLoading = false;
 
-  void _entrar() {
-    setState(() {});
+  Future<void> _entrar() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    String res = await AuthMethods().signUpUser(
+        email: emailController.text, password: passwordController.text);
+
+    if (res == "success") {
+      setState(() {
+        _isLoading = false;
+      });
+
+      print("Redirecionando");
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const Menu()),
+      );
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      // show the error
+      showSnackBar(context, res);
+    }
   }
 
   @override
@@ -82,22 +108,20 @@ class _SignupState extends State<Signup> {
                   height: 24,
                 ),
                 TextFielInput(
-                  hintText: 'Senha',
-                  textInputType: TextInputType.name,
-                  textEditingController: passwordController,
-                  icon: const Icon(Icons.password),
-                  isPass: true
-                ),
+                    hintText: 'Senha',
+                    textInputType: TextInputType.name,
+                    textEditingController: passwordController,
+                    icon: const Icon(Icons.password),
+                    isPass: true),
                 const SizedBox(
                   height: 24,
                 ),
                 TextFielInput(
-                  hintText: 'Repita a Senha',
-                  textInputType: TextInputType.name,
-                  textEditingController: repeatPasswordController,
-                  icon: const Icon(Icons.password),
-                  isPass: true
-                ),
+                    hintText: 'Repita a Senha',
+                    textInputType: TextInputType.name,
+                    textEditingController: repeatPasswordController,
+                    icon: const Icon(Icons.password),
+                    isPass: true),
                 const SizedBox(
                   height: 24,
                 ),
@@ -108,10 +132,9 @@ class _SignupState extends State<Signup> {
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
                               Colors.redAccent),
-                          padding:
-                              MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                  const EdgeInsets.fromLTRB(
-                                      20.0, 15.0, 20.0, 15.0)),
+                          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                              const EdgeInsets.fromLTRB(
+                                  20.0, 15.0, 20.0, 15.0)),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
@@ -121,10 +144,15 @@ class _SignupState extends State<Signup> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) _entrar();
                       },
-                      child: const Text(
-                        "Criar",
-                        style: TextStyle(color: Colors.white, fontSize: 25.0),
-                      ),
+                      child: !_isLoading
+                          ? const Text(
+                              "Criar",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 25.0),
+                            )
+                          : const CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
                     )),
                 Text(
                   _textInfo,

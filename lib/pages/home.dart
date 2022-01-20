@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
     return Column(
       children: [
         SizedBox(
-          height: 130,
+          height: 100,
           child: SafeArea(
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
         ),
         SizedBox(
           width: double.infinity,
-          height: MediaQuery.of(context).size.height - 190,
+          height: MediaQuery.of(context).size.height - 240,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
