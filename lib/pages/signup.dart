@@ -28,7 +28,9 @@ class _SignupState extends State<Signup> {
     });
 
     String res = await AuthMethods().signUpUser(
-        email: emailController.text, password: passwordController.text);
+        username: nameController.text,
+        email: emailController.text,
+        password: passwordController.text);
 
     if (res == "success") {
       setState(() {

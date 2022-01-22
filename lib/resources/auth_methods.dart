@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:amica/models/user.dart' as model;
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -8,19 +9,31 @@ class AuthMethods {
 
   //Cadastrar usuário
   Future<String> signUpUser(
-      {required String email, required String password}) async {
+      {required String username,
+      required String email,
+      required String password}) async {
     String res = "Ocorreu um erro";
 
     try {
-      if (email.isNotEmpty || password.isNotEmpty) {
+      if (username.isNotEmpty || email.isNotEmpty || password.isNotEmpty) {
         //Criando usuário
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
         print(cred.user!.uid);
 
-        await _firestore.collection('users').doc(cred.user!.uid).set(
-            {'email': email, 'password': password, 'bio': '', 'posts': []});
+        model.User _user = model.User(
+            username: username,
+            email: email,
+            password: password,
+            uid: cred.user!.uid,
+            bio: '',
+            posts: []);
+
+        await _firestore
+            .collection('users')
+            .doc(cred.user!.uid)
+            .set(_user.toJson());
 
         res = 'success';
       }
