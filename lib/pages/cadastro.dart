@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:amica/widgtes/insert_field_cadastro.dart';
 import 'package:amica/widgtes/biography_text_field_cadastro.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class Cadastro extends StatefulWidget {
   const Cadastro({Key? key}) : super(key: key);
 
   @override
   _CadastroState createState() => _CadastroState();
+}
+
+class Pet {
+  @required
+  String name;
+  @required
+  String specie;
+  String race;
+  int age = 0;
+  @required
+  String sex;
+  @required
+  String contact;
+  String biography;
+
+  Pet(this.name, this.specie, this.race, this.age, this.sex, this.contact,
+      this.biography);
 }
 
 class _CadastroState extends State<Cadastro> {
@@ -18,7 +37,84 @@ class _CadastroState extends State<Cadastro> {
   TextEditingController contactController = TextEditingController();
   TextEditingController biographyController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final String _textInfo = "";
+  XFile? imageXFile;
+  File? imageFile;
+
+  Future<void> _openGallery(BuildContext context) async {
+    XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    setState(() {
+      imageXFile = image;
+      imageFile = File(imageXFile!.path);
+    });
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _openCamera(BuildContext context) async {
+    XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
+    setState(() {
+      imageXFile = image;
+      imageFile = File(imageXFile!.path);
+    });
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _showChoiceImage(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Forma de escolha da imagem"),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: [
+                  GestureDetector(
+                    child: Text("Galeria"),
+                    onTap: () => _openGallery(context),
+                  ),
+                  Padding(padding: EdgeInsets.all(8)),
+                  GestureDetector(
+                    child: Text("Câmera"),
+                    onTap: () => _openCamera(context),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Widget _imageWidget() {
+    if (imageFile == null) {
+      return Container(
+          padding: EdgeInsets.fromLTRB(0, 35, 0, 10),
+          child: CircleAvatar(
+            backgroundColor: Colors.white60,
+            foregroundImage: AssetImage('imagens/dog.png'),
+            radius: 90,
+          ));
+    } else {
+      return Container(
+          padding: EdgeInsets.fromLTRB(0, 35, 0, 10),
+          child: CircleAvatar(
+            foregroundImage: AssetImage(imageFile!.path),
+            radius: 90,
+          ));
+    }
+  }
+
+  void _savePet() {
+    Pet pet = Pet(
+        nameController.text,
+        specieController.text,
+        raceController.text,
+        int.parse(ageController.text),
+        sexController.text,
+        contactController.text,
+        biographyController.text);
+    print(pet.name);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +122,7 @@ class _CadastroState extends State<Cadastro> {
       child: Center(
         child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.fromLTRB(0, 35, 0, 10),
-              child: CircleAvatar(
-                backgroundImage: AssetImage('imagens/dog.png'),
-                radius: 90,
-              ),
-            ),
+            _imageWidget(),
             ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor:
@@ -43,7 +133,7 @@ class _CadastroState extends State<Cadastro> {
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                             side: const BorderSide(color: Colors.grey)))),
-                onPressed: () => print("alterado"),
+                onPressed: () => _showChoiceImage(context),
                 child: Text(
                   "Alterar",
                   style: TextStyle(fontSize: 25),
@@ -117,7 +207,7 @@ class _CadastroState extends State<Cadastro> {
                               borderRadius: BorderRadius.circular(30),
                               side:
                                   const BorderSide(color: Colors.redAccent)))),
-                  onPressed: () => print("salvar"),
+                  onPressed: _savePet,
                   child: Text(
                     "Salvar",
                     style: TextStyle(fontSize: 25),
