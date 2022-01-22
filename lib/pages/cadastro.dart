@@ -98,7 +98,7 @@ class _CadastroState extends State<Cadastro> {
       return Container(
           padding: EdgeInsets.fromLTRB(0, 35, 0, 10),
           child: CircleAvatar(
-            foregroundImage: AssetImage(imageFile!.path),
+            foregroundImage: FileImage(imageFile!),
             radius: 90,
           ));
     }
