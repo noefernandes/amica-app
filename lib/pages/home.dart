@@ -49,19 +49,20 @@ class _HomeState extends State<Home> {
           ),
         ),
         SizedBox(
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height - 240,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  CardPet(),
-                  CardPet(),
-                  CardPet(),
-                  CardPet(),
-                ],
-              ),
-            ))
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height - 240,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                CardPet(id: '1'),
+                CardPet(id: '2'),
+                CardPet(id: '3'),
+                CardPet(id: '4'),
+              ],
+            ),
+          ),
+        )
       ],
     );
   }

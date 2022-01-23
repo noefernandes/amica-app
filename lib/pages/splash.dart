@@ -106,7 +106,7 @@ class _SplashState extends State<Splash> {
 
   Future<void> connectionChecker() async {
     final bool isConnected = await InternetConnectionChecker().hasConnection;
-    Timer(const Duration(seconds: 7), () {
+    Timer(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
