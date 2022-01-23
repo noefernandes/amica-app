@@ -1,4 +1,4 @@
-import 'package:amica/pages/home.dart';
+import 'package:amica/pages/menu.dart';
 import 'package:amica/pages/login.dart';
 import 'package:amica/pages/temp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,10 +18,10 @@ void main() async {
           if (snapshot.connectionState == ConnectionState.active) {
             // Checking if the snapshot has any data or not
             if (snapshot.hasData) {
-              //print("Logado <--------------------");
+              print("Logado <--------------------");
               //print(snapshot);
               // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
-              return const Temp();
+              return const Menu();
             } else if (snapshot.hasError) {
               return Center(
                 child: Text('${snapshot.error}'),
@@ -31,8 +31,8 @@ void main() async {
 
           // means connection to future hasnt been made yet
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: const CircularProgressIndicator(),
+            return const Center(
+              child: CircularProgressIndicator(),
             );
           }
 

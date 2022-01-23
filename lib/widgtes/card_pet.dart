@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 
+import 'card_info.dart';
+
 class CardPet extends StatelessWidget {
-  const CardPet({Key? key}) : super(key: key);
+  final String id;
+  const CardPet({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print('Show Card Info');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CardInfo(id: id),
+          ),
+        );
       },
       child: Card(
         semanticContainer: true,
@@ -21,20 +29,25 @@ class CardPet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
-                    Text('Bob Marley', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-                    Text('Idade: 8 anos e 11 meses', style: TextStyle(fontSize: 18)),
+                    Text('Bob Marley',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25)),
+                    Text('Idade: 8 anos e 11 meses',
+                        style: TextStyle(fontSize: 18)),
                     Text('Raça: Beagle', style: TextStyle(fontSize: 18)),
                   ],
                 ),
               ),
             ),
-            Image.network(
-              'https://placeimg.com/640/680/any',
-              width: MediaQuery.of(context).size.width * 0.4 - 5,
-              alignment: Alignment.topCenter,
-              fit: BoxFit.fitHeight,
-              height: 180,
-            ),
+            Hero(tag: 'image'+id,
+              child: Image.network(
+                'https://placeimg.com/640/680/any',
+                width: MediaQuery.of(context).size.width * 0.4 - 5,
+                alignment: Alignment.topCenter,
+                fit: BoxFit.fitWidth,
+                height: 100,
+              ),
+            )
           ],
         ),
         shape: RoundedRectangleBorder(
