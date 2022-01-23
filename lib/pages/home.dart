@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
         ),
         SizedBox(
           width: double.infinity,
-          height: MediaQuery.of(context).size.height - 240,
+          height: MediaQuery.of(context).size.height - 195,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,6 +59,7 @@ class _HomeState extends State<Home> {
                 CardPet(id: '2'),
                 CardPet(id: '3'),
                 CardPet(id: '4'),
+                CardPet(id: '5'),
               ],
             ),
           ),
