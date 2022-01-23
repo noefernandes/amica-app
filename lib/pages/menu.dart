@@ -1,8 +1,10 @@
 import 'package:amica/pages/favorite.dart';
 import 'package:amica/pages/person.dart';
 import 'package:amica/pages/cadastro.dart';
+import 'package:amica/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:provider/provider.dart';
 
 import 'home.dart';
 
@@ -13,6 +15,18 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  @override
+  void initState() {
+    super.initState();
+    addData();
+  }
+
+  addData() async {
+    UserProvider _userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    await _userProvider.refreshUser();
+  }
+
   int index = 0;
 
   final pages = [

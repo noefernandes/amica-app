@@ -1,8 +1,17 @@
+import 'dart:ffi';
+import 'dart:typed_data';
+
+import 'package:amica/providers/user_provider.dart';
+import 'package:amica/resources/firestore_methods.dart';
+import 'package:amica/utils/utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:amica/widgtes/insert_field_cadastro.dart';
 import 'package:amica/widgtes/biography_text_field_cadastro.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+
+import 'package:provider/provider.dart';
 
 class Cadastro extends StatefulWidget {
   const Cadastro({Key? key}) : super(key: key);
@@ -37,23 +46,21 @@ class _CadastroState extends State<Cadastro> {
   TextEditingController contactController = TextEditingController();
   TextEditingController biographyController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  XFile? imageXFile;
-  File? imageFile;
+  Uint8List? _file;
+  bool isLoading = false;
 
   Future<void> _openGallery(BuildContext context) async {
-    XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    Uint8List file = await pickImage(ImageSource.gallery);
     setState(() {
-      imageXFile = image;
-      imageFile = File(imageXFile!.path);
+      _file = file;
     });
     Navigator.of(context).pop();
   }
 
   Future<void> _openCamera(BuildContext context) async {
-    XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
+    Uint8List file = await pickImage(ImageSource.camera);
     setState(() {
-      imageXFile = image;
-      imageFile = File(imageXFile!.path);
+      _file = file;
     });
     Navigator.of(context).pop();
   }
@@ -86,7 +93,7 @@ class _CadastroState extends State<Cadastro> {
   }
 
   Widget _imageWidget() {
-    if (imageFile == null) {
+    if (_file == null) {
       return Container(
           padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
           child: const CircleAvatar(
@@ -98,13 +105,13 @@ class _CadastroState extends State<Cadastro> {
       return Container(
           padding: const EdgeInsets.fromLTRB(0, 35, 0, 10),
           child: CircleAvatar(
-            foregroundImage: FileImage(imageFile!),
+            foregroundImage: MemoryImage(_file!),
             radius: 90,
           ));
     }
   }
 
-  void _savePet() {
+  void _savePet(String uid, String username) async {
     Pet pet = Pet(
         nameController.text,
         specieController.text,
@@ -114,10 +121,56 @@ class _CadastroState extends State<Cadastro> {
         contactController.text,
         biographyController.text);
     print(pet.name);
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      // upload to storage and db
+      String res = await FireStoreMethods().uploadPost(
+        uid,
+        username,
+        nameController.text,
+        specieController.text,
+        sexController.text,
+        contactController.text,
+        biographyController.text,
+        _file!,
+      );
+      if (res == "success") {
+        setState(() {
+          isLoading = false;
+        });
+        showSnackBar(
+          context,
+          'Posted!',
+        );
+        clearImage();
+      } else {
+        showSnackBar(context, res);
+      }
+    } catch (err) {
+      setState(() {
+        isLoading = false;
+      });
+      showSnackBar(
+        context,
+        err.toString(),
+      );
+    }
+  }
+
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+
     return SizedBox(
       width: double.infinity,
       height: MediaQuery.of(context).size.height - 95,
@@ -213,11 +266,16 @@ class _CadastroState extends State<Cadastro> {
                       ),
                     ),
                   ),
-                  onPressed: _savePet,
-                  child: const Text(
-                    "Salvar",
-                    style: TextStyle(fontSize: 25),
-                  ),
+                  onPressed: () => _savePet(
+                      userProvider.getUser.uid, userProvider.getUser.username),
+                  child: !isLoading
+                      ? const Text(
+                          "Salvar",
+                          style: TextStyle(fontSize: 25),
+                        )
+                      : const CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
                 ),
               ),
             ],

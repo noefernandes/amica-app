@@ -8,22 +8,30 @@ import 'package:uuid/uuid.dart';
 class FireStoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> uploadPost(String description, Uint8List file, String uid,
-      String username, String profImage) async {
+  Future<String> uploadPost(
+      String uid,
+      String username,
+      String name,
+      String specie,
+      String sex,
+      String contact,
+      String biography,
+      Uint8List file) async {
     String res = "Some error occurred";
     try {
       String photoUrl =
           await StorageMethods().uploadImageToStorage('posts', file, true);
       String postId = const Uuid().v1(); // creates unique id based on time
       Post post = Post(
-        description: description,
-        uid: uid,
-        username: username,
-        postId: postId,
-        datePublished: DateTime.now(),
-        postUrl: photoUrl,
-        profImage: profImage,
-      );
+          uid: uid,
+          username: username,
+          name: name,
+          postId: postId,
+          specie: specie,
+          sex: sex,
+          contact: contact,
+          biography: biography,
+          postUrl: photoUrl);
       _firestore.collection('posts').doc(postId).set(post.toJson());
       res = "success";
     } catch (err) {

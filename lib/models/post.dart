@@ -1,44 +1,53 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
-  final String description;
-  final String uid;
-  final String username;
+  final String uid; //Id do doador
+  final String username; //Nome do doador
+  final String name; //Nome do animal
   final String postId;
-  final DateTime datePublished;
+  final String specie;
+  final String sex;
+  final String contact;
+  final String biography;
   final String postUrl;
-  final String profImage;
 
-  const Post({
-    required this.description,
-    required this.uid,
-    required this.username,
-    required this.postId,
-    required this.datePublished,
-    required this.postUrl,
-    required this.profImage,
-  });
+  const Post(
+      {required this.uid,
+      required this.username,
+      required this.name,
+      required this.postId,
+      required this.specie,
+      required this.sex,
+      required this.contact,
+      required this.biography,
+      required this.postUrl});
 
   static Post fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return Post(
-        description: snapshot["description"],
         uid: snapshot["uid"],
-        postId: snapshot["postId"],
-        datePublished: snapshot["datePublished"],
         username: snapshot["username"],
-        postUrl: snapshot['postUrl'],
-        profImage: snapshot['profImage']);
+        name: snapshot["name"],
+        postId: snapshot["postId"],
+        specie: snapshot["specie"],
+        sex: snapshot["sex"],
+        contact: snapshot["contact"],
+        biography: snapshot["biography"],
+        postUrl: snapshot['postUrl']);
   }
 
   Map<String, dynamic> toJson() => {
-        "description": description,
         "uid": uid,
         "username": username,
+        "name": name,
         "postId": postId,
-        "datePublished": datePublished,
-        'postUrl': postUrl,
-        'profImage': profImage
+        "specie": specie,
+        "sex": sex,
+        "contact": contact,
+        "biography": biography,
+        "postUrl": postUrl
       };
 }
