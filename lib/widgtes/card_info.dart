@@ -119,10 +119,8 @@ class _CardInfoState extends State<CardInfo> {
                       fixedSize: const Size.fromWidth(180),
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     ),
-                    onPressed: () async {
-                      setState(() => hasBackground = !isLiked);
-                      await Future.delayed(const Duration(milliseconds: 100));
-                      key.currentState!.onTap();
+                    onPressed: () {
+                      print('irá abrir o telefone ja com o número do contato');
                     },
                     child: SizedBox(
                       child: Row(
