@@ -27,11 +27,11 @@ class Pet {
   String specie;
   @required
   String sex;
+  int age = 0;
+  String race;
   @required
   String contact;
   String biography;
-  String race;
-  int age = 0;
 
   Pet(this.name, this.specie, this.race, this.age, this.sex, this.contact,
       this.biography);
@@ -134,6 +134,8 @@ class _CadastroState extends State<Cadastro> {
         nameController.text,
         specieController.text,
         sexController.text,
+        int.parse(ageController.text),
+        raceController.text,
         contactController.text,
         biographyController.text,
         _file!,

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 
 class CardInfo extends StatefulWidget {
-  final String id;
-  const CardInfo({Key? key, required this.id}) : super(key: key);
+  final snap;
+  const CardInfo({Key? key, required this.snap}) : super(key: key);
   @override
   _CardInfoState createState() => _CardInfoState();
 }
@@ -32,9 +32,9 @@ class _CardInfoState extends State<CardInfo> {
             SizedBox(
               width: double.infinity,
               child: Hero(
-                tag: 'image'+widget.id,
+                tag: 'image' + widget.snap['postId'],
                 child: Image.network(
-                  'https://placeimg.com/640/680/any',
+                  widget.snap['postUrl'],
                   alignment: Alignment.topCenter,
                   fit: BoxFit.fitWidth,
                   height: 250,
@@ -50,11 +50,14 @@ class _CardInfoState extends State<CardInfo> {
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       shape: const StadiumBorder(),
-                      side: BorderSide(width: 1, color: hasBackground ? Colors.red : Colors.grey),
+                      side: BorderSide(
+                          width: 1,
+                          color: hasBackground ? Colors.red : Colors.grey),
                       backgroundColor:
                           hasBackground ? Colors.red : Colors.white,
                       fixedSize: const Size.fromWidth(180),
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                     ),
                     onPressed: () async {
                       setState(() => hasBackground = !isLiked);
@@ -91,8 +94,8 @@ class _CardInfoState extends State<CardInfo> {
                               likeCountPadding: const EdgeInsets.only(left: 5),
                               onTap: (isLiked) async {
                                 this.isLiked = !isLiked;
-                                Future.delayed(aimationDuration).then(
-                                    (_) => setState(() => hasBackground = !isLiked));
+                                Future.delayed(aimationDuration).then((_) =>
+                                    setState(() => hasBackground = !isLiked));
                                 return !isLiked;
                               },
                             ),
@@ -101,9 +104,8 @@ class _CardInfoState extends State<CardInfo> {
                             'Favoritar',
                             style: TextStyle(
                                 fontSize: 22,
-                                color: hasBackground
-                                    ? Colors.white
-                                    : Colors.grey),
+                                color:
+                                    hasBackground ? Colors.white : Colors.grey),
                           )
                         ],
                       ),
@@ -117,7 +119,8 @@ class _CardInfoState extends State<CardInfo> {
                       side: BorderSide(width: 1, color: Colors.blue.shade600),
                       backgroundColor: Colors.blue.shade600,
                       fixedSize: const Size.fromWidth(180),
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                     ),
                     onPressed: () {
                       print('irá abrir o telefone ja com o número do contato');
@@ -128,13 +131,14 @@ class _CardInfoState extends State<CardInfo> {
                         children: const [
                           Padding(
                             padding: EdgeInsets.only(right: 10),
-                            child: Icon(Icons.phone, color: Colors.white,),
+                            child: Icon(
+                              Icons.phone,
+                              color: Colors.white,
+                            ),
                           ),
                           Text(
                             'Contato',
-                            style: TextStyle(
-                                fontSize: 22,
-                                color: Colors.white),
+                            style: TextStyle(fontSize: 22, color: Colors.white),
                           )
                         ],
                       ),
@@ -144,12 +148,12 @@ class _CardInfoState extends State<CardInfo> {
                 ],
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: Directionality(
                 textDirection: TextDirection.ltr,
                 child: Text(
-                  'Ola dsadasdasd Ola dsadasdasd Ola dsadasdasd Ola dsadasdasd Ola dsadasdasd Ola dsadasdasd',
+                  widget.snap['biography'],
                   style: TextStyle(fontSize: 22),
                   textAlign: TextAlign.justify,
                 ),

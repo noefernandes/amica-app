@@ -9,6 +9,8 @@ class Post {
   final String postId;
   final String specie;
   final String sex;
+  final int age;
+  final String race;
   final String contact;
   final String biography;
   final String postUrl;
@@ -20,6 +22,8 @@ class Post {
       required this.postId,
       required this.specie,
       required this.sex,
+      required this.age,
+      required this.race,
       required this.contact,
       required this.biography,
       required this.postUrl});
@@ -34,6 +38,8 @@ class Post {
         postId: snapshot["postId"],
         specie: snapshot["specie"],
         sex: snapshot["sex"],
+        age: snapshot["age"],
+        race: snapshot["race"],
         contact: snapshot["contact"],
         biography: snapshot["biography"],
         postUrl: snapshot['postUrl']);
@@ -46,6 +52,8 @@ class Post {
         "postId": postId,
         "specie": specie,
         "sex": sex,
+        "age": age,
+        "race": race,
         "contact": contact,
         "biography": biography,
         "postUrl": postUrl

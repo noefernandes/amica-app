@@ -1,4 +1,5 @@
 import 'package:amica/widgtes/card_pet.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -51,17 +52,24 @@ class _HomeState extends State<Home> {
         SizedBox(
           width: double.infinity,
           height: MediaQuery.of(context).size.height - 195,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                CardPet(id: '1'),
-                CardPet(id: '2'),
-                CardPet(id: '3'),
-                CardPet(id: '4'),
-                CardPet(id: '5'),
-              ],
-            ),
+          child: StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+            builder: (context,
+                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (ctx, index) => Container(
+                  child: CardPet(
+                    snap: snapshot.data!.docs[index].data(),
+                  ),
+                ),
+              );
+            },
           ),
         )
       ],
