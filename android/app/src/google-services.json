@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "452823671487",
+    "project_id": "amica-c4b04",
+    "storage_bucket": "amica-c4b04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452823671487:android:aa412372eddddabdd5dc0a",
+        "android_client_info": {
+          "package_name": "com.example.amica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452823671487-s4tivi6th7lul9tpkhbootiishobe14b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ0SOSIhdvotWPkBGS5So9fLA2islAWhk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452823671487-s4tivi6th7lul9tpkhbootiishobe14b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
