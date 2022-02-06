@@ -1,5 +1,9 @@
+import 'package:amica/providers/user_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class CardInfo extends StatefulWidget {
   final snap;
@@ -15,8 +19,12 @@ class _CardInfoState extends State<CardInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+
     const double size = 30;
     const aimationDuration = Duration(milliseconds: 500);
+
+    hasBackground = widget.snap['favorites'].contains(userProvider.getUser.uid);
 
     return Scaffold(
         appBar: AppBar(
@@ -63,6 +71,32 @@ class _CardInfoState extends State<CardInfo> {
                       setState(() => hasBackground = !isLiked);
                       await Future.delayed(const Duration(milliseconds: 100));
                       key.currentState!.onTap();
+                      if (isLiked && hasBackground == false) {
+                        List newFavorites = widget.snap['favorites'];
+                        newFavorites.add(userProvider.getUser.uid);
+                        FirebaseFirestore.instance
+                            .collection('posts')
+                            .doc(widget.snap['postId'])
+                            .update({'favorites': newFavorites});
+
+                        print(newFavorites);
+                      } else {
+                        List newFavorites = widget.snap['favorites'];
+                        newFavorites.remove(userProvider.getUser.uid);
+                        FirebaseFirestore.instance
+                            .collection('posts')
+                            .doc(widget.snap['postId'])
+                            .update({'favorites': newFavorites});
+
+                        print(newFavorites);
+                      }
+                      /*List newFavorites = widget.snap['favorites'];
+                      newFavorites.add(userProvider.getUser.uid);
+                      await widget.snap['postId']
+                          .update({"favorites": newFavorites})
+                          .whenComplete(
+                              () => print("Note item updated in the database"))
+                          .catchError((e) => print(e));*/
                     },
                     child: SizedBox(
                       child: Row(
@@ -123,7 +157,8 @@ class _CardInfoState extends State<CardInfo> {
                           horizontal: 8, vertical: 4),
                     ),
                     onPressed: () {
-                      print('irá abrir o telefone ja com o número do contato');
+                      //print('irá abrir o telefone ja com o número do contato');
+                      UrlLauncher.launch('tel:+${widget.snap['contact']}');
                     },
                     child: SizedBox(
                       child: Row(

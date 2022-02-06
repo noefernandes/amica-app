@@ -146,7 +146,7 @@ class _CadastroState extends State<Cadastro> {
         });
         showSnackBar(
           context,
-          'Posted!',
+          'Post realizado!',
         );
         clearImage();
       } else {
@@ -165,6 +165,13 @@ class _CadastroState extends State<Cadastro> {
 
   void clearImage() {
     setState(() {
+      nameController.clear();
+      specieController.clear();
+      raceController.clear();
+      ageController.clear();
+      sexController.clear();
+      contactController.clear();
+      biographyController.clear();
       _file = null;
     });
   }

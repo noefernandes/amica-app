@@ -1,6 +1,12 @@
 import 'package:amica/pages/login.dart';
+import 'package:amica/providers/user_provider.dart';
+import 'package:amica/resources/firestore_methods.dart';
+import 'package:amica/widgtes/card_pet.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:amica/resources/auth_methods.dart';
+import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Person extends StatefulWidget {
   const Person({Key? key}) : super(key: key);
@@ -19,11 +25,72 @@ class _PersonState extends State<Person> {
       );
     }
 
-    return Center(
-      child: ElevatedButton(
-        child: const Text("Log out"),
-        onPressed: _sair,
-      ),
-    );
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+
+    return SingleChildScrollView(
+        child: Column(
+      children: [
+        SizedBox(
+            height: 100,
+            child: Padding(
+                padding: EdgeInsets.all(32),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Bem vindo, ' + userProvider.getUser.username,
+                      style: GoogleFonts.baloo(
+                          fontStyle: FontStyle.normal,
+                          color: Colors.black87,
+                          fontSize: 20),
+                    ),
+                    ElevatedButton(
+                      child: const Text("Sair"),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.redAccent,
+                        onPrimary: Colors.white,
+                        side: BorderSide(color: Colors.black, width: 1),
+                      ),
+                      onPressed: _sair,
+                    )
+                  ],
+                ))),
+        SizedBox(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height - 195,
+          child: StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection('posts')
+                .where('uid', isEqualTo: userProvider.getUser.uid)
+                .snapshots(),
+            builder: (context,
+                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (ctx, index) => Dismissible(
+                        background: Container(
+                          color: Colors.red,
+                        ),
+                        key: UniqueKey(),
+                        onDismissed: (DismissDirection direction) async {
+                          await FireStoreMethods().deletePost(
+                              snapshot.data!.docs[index].data()['postId']);
+                        },
+                        child: Container(
+                          child: CardPet(
+                            snap: snapshot.data!.docs[index].data(),
+                          ),
+                        ),
+                      ));
+            },
+          ),
+        )
+      ],
+    ));
   }
 }

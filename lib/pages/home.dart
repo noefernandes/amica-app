@@ -31,7 +31,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return SingleChildScrollView(
+        child: Column(
       children: [
         SizedBox(
           height: 100,
@@ -73,7 +74,7 @@ class _HomeState extends State<Home> {
           ),
         )
       ],
-    );
+    ));
   }
 
   Widget buildMenu(i, cor) => Padding(

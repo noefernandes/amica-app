@@ -35,7 +35,8 @@ class FireStoreMethods {
           race: race,
           contact: contact,
           biography: biography,
-          postUrl: photoUrl);
+          postUrl: photoUrl,
+          favorites: []);
       _firestore.collection('posts').doc(postId).set(post.toJson());
       res = "success";
     } catch (err) {
