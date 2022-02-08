@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'card_info.dart';
 
 class CardPet extends StatelessWidget {
-  final String id;
-  const CardPet({Key? key, required this.id}) : super(key: key);
+  final snap;
+  const CardPet({Key? key, required this.snap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class CardPet extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CardInfo(id: id),
+            builder: (context) => CardInfo(snap: snap),
           ),
         );
       },
@@ -28,20 +28,22 @@ class CardPet extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Bob Marley',
+                  children: [
+                    Text(snap['name'],
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 25)),
-                    Text('Idade: 8 anos e 11 meses',
+                    Text('Idade: ' + snap['age'].toString() + ' anos',
                         style: TextStyle(fontSize: 18)),
-                    Text('Raça: Beagle', style: TextStyle(fontSize: 18)),
+                    Text('Raça: ' + snap['race'],
+                        style: TextStyle(fontSize: 18)),
                   ],
                 ),
               ),
             ),
-            Hero(tag: 'image'+id,
+            Hero(
+              tag: 'image' + snap['postId'],
               child: Image.network(
-                'https://placeimg.com/640/680/any',
+                snap['postUrl'],
                 width: MediaQuery.of(context).size.width * 0.4 - 5,
                 alignment: Alignment.topCenter,
                 fit: BoxFit.fitWidth,

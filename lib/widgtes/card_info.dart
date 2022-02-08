@@ -1,9 +1,13 @@
+import 'package:amica/providers/user_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class CardInfo extends StatefulWidget {
-  final String id;
-  const CardInfo({Key? key, required this.id}) : super(key: key);
+  final snap;
+  const CardInfo({Key? key, required this.snap}) : super(key: key);
   @override
   _CardInfoState createState() => _CardInfoState();
 }
@@ -15,8 +19,12 @@ class _CardInfoState extends State<CardInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+
     const double size = 30;
     const aimationDuration = Duration(milliseconds: 500);
+
+    hasBackground = widget.snap['favorites'].contains(userProvider.getUser.uid);
 
     return Scaffold(
         appBar: AppBar(
@@ -32,9 +40,9 @@ class _CardInfoState extends State<CardInfo> {
             SizedBox(
               width: double.infinity,
               child: Hero(
-                tag: 'image'+widget.id,
+                tag: 'image' + widget.snap['postId'],
                 child: Image.network(
-                  'https://placeimg.com/640/680/any',
+                  widget.snap['postUrl'],
                   alignment: Alignment.topCenter,
                   fit: BoxFit.fitWidth,
                   height: 250,
@@ -50,16 +58,45 @@ class _CardInfoState extends State<CardInfo> {
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       shape: const StadiumBorder(),
-                      side: BorderSide(width: 1, color: hasBackground ? Colors.red : Colors.grey),
+                      side: BorderSide(
+                          width: 1,
+                          color: hasBackground ? Colors.red : Colors.grey),
                       backgroundColor:
                           hasBackground ? Colors.red : Colors.white,
                       fixedSize: const Size.fromWidth(180),
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                     ),
                     onPressed: () async {
                       setState(() => hasBackground = !isLiked);
                       await Future.delayed(const Duration(milliseconds: 100));
                       key.currentState!.onTap();
+                      if (isLiked && hasBackground == false) {
+                        List newFavorites = widget.snap['favorites'];
+                        newFavorites.add(userProvider.getUser.uid);
+                        FirebaseFirestore.instance
+                            .collection('posts')
+                            .doc(widget.snap['postId'])
+                            .update({'favorites': newFavorites});
+
+                        print(newFavorites);
+                      } else {
+                        List newFavorites = widget.snap['favorites'];
+                        newFavorites.remove(userProvider.getUser.uid);
+                        FirebaseFirestore.instance
+                            .collection('posts')
+                            .doc(widget.snap['postId'])
+                            .update({'favorites': newFavorites});
+
+                        print(newFavorites);
+                      }
+                      /*List newFavorites = widget.snap['favorites'];
+                      newFavorites.add(userProvider.getUser.uid);
+                      await widget.snap['postId']
+                          .update({"favorites": newFavorites})
+                          .whenComplete(
+                              () => print("Note item updated in the database"))
+                          .catchError((e) => print(e));*/
                     },
                     child: SizedBox(
                       child: Row(
@@ -91,8 +128,8 @@ class _CardInfoState extends State<CardInfo> {
                               likeCountPadding: const EdgeInsets.only(left: 5),
                               onTap: (isLiked) async {
                                 this.isLiked = !isLiked;
-                                Future.delayed(aimationDuration).then(
-                                    (_) => setState(() => hasBackground = !isLiked));
+                                Future.delayed(aimationDuration).then((_) =>
+                                    setState(() => hasBackground = !isLiked));
                                 return !isLiked;
                               },
                             ),
@@ -101,9 +138,8 @@ class _CardInfoState extends State<CardInfo> {
                             'Favoritar',
                             style: TextStyle(
                                 fontSize: 22,
-                                color: hasBackground
-                                    ? Colors.white
-                                    : Colors.grey),
+                                color:
+                                    hasBackground ? Colors.white : Colors.grey),
                           )
                         ],
                       ),
@@ -117,10 +153,12 @@ class _CardInfoState extends State<CardInfo> {
                       side: BorderSide(width: 1, color: Colors.blue.shade600),
                       backgroundColor: Colors.blue.shade600,
                       fixedSize: const Size.fromWidth(180),
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                     ),
                     onPressed: () {
-                      print('irá abrir o telefone ja com o número do contato');
+                      //print('irá abrir o telefone ja com o número do contato');
+                      UrlLauncher.launch('tel:+${widget.snap['contact']}');
                     },
                     child: SizedBox(
                       child: Row(
@@ -128,13 +166,14 @@ class _CardInfoState extends State<CardInfo> {
                         children: const [
                           Padding(
                             padding: EdgeInsets.only(right: 10),
-                            child: Icon(Icons.phone, color: Colors.white,),
+                            child: Icon(
+                              Icons.phone,
+                              color: Colors.white,
+                            ),
                           ),
                           Text(
                             'Contato',
-                            style: TextStyle(
-                                fontSize: 22,
-                                color: Colors.white),
+                            style: TextStyle(fontSize: 22, color: Colors.white),
                           )
                         ],
                       ),
@@ -144,12 +183,12 @@ class _CardInfoState extends State<CardInfo> {
                 ],
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: Directionality(
                 textDirection: TextDirection.ltr,
                 child: Text(
-                  'Ola dsadasdasd Ola dsadasdasd Ola dsadasdasd Ola dsadasdasd Ola dsadasdasd Ola dsadasdasd',
+                  widget.snap['biography'],
                   style: TextStyle(fontSize: 22),
                   textAlign: TextAlign.justify,
                 ),

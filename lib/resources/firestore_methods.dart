@@ -14,6 +14,8 @@ class FireStoreMethods {
       String name,
       String specie,
       String sex,
+      int age,
+      String race,
       String contact,
       String biography,
       Uint8List file) async {
@@ -29,9 +31,12 @@ class FireStoreMethods {
           postId: postId,
           specie: specie,
           sex: sex,
+          age: age,
+          race: race,
           contact: contact,
           biography: biography,
-          postUrl: photoUrl);
+          postUrl: photoUrl,
+          favorites: []);
       _firestore.collection('posts').doc(postId).set(post.toJson());
       res = "success";
     } catch (err) {

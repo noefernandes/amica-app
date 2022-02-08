@@ -9,9 +9,12 @@ class Post {
   final String postId;
   final String specie;
   final String sex;
+  final int age;
+  final String race;
   final String contact;
   final String biography;
   final String postUrl;
+  final favorites; // Lista de id's dos usuários que favoritaram
 
   const Post(
       {required this.uid,
@@ -20,9 +23,12 @@ class Post {
       required this.postId,
       required this.specie,
       required this.sex,
+      required this.age,
+      required this.race,
       required this.contact,
       required this.biography,
-      required this.postUrl});
+      required this.postUrl,
+      required this.favorites});
 
   static Post fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
@@ -34,9 +40,12 @@ class Post {
         postId: snapshot["postId"],
         specie: snapshot["specie"],
         sex: snapshot["sex"],
+        age: snapshot["age"],
+        race: snapshot["race"],
         contact: snapshot["contact"],
         biography: snapshot["biography"],
-        postUrl: snapshot['postUrl']);
+        postUrl: snapshot['postUrl'],
+        favorites: snapshot['favorites']);
   }
 
   Map<String, dynamic> toJson() => {
@@ -46,8 +55,11 @@ class Post {
         "postId": postId,
         "specie": specie,
         "sex": sex,
+        "age": age,
+        "race": race,
         "contact": contact,
         "biography": biography,
-        "postUrl": postUrl
+        "postUrl": postUrl,
+        "favorites": favorites
       };
 }
