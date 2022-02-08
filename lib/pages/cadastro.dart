@@ -121,10 +121,11 @@ class _CadastroState extends State<Cadastro> {
         pet.name,
         pet.specie,
         pet.sex,
+        pet.age,
+        pet.race,
         pet.contact,
         pet.biography,
         pet.photo!,
-
       );
       if (res == "success") {
         setState(() {
@@ -132,7 +133,7 @@ class _CadastroState extends State<Cadastro> {
         });
         showSnackBar(
           context,
-          'Post realizado!',
+          'Posted!',
         );
         clearImage();
       } else {
@@ -151,15 +152,13 @@ class _CadastroState extends State<Cadastro> {
 
   void clearImage() {
     setState(() {
-
       nameController.clear();
-      specieDropdownValue.clear();
+      specieDropdownValue = null;
       raceController.clear();
       ageController.clear();
-      sexDropdownValue.clear();
+      sexDropdownValue = null;
       contactController.clear();
       biographyController.clear();
-
       _file = null;
     });
   }
