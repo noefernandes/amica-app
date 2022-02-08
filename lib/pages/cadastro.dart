@@ -1,6 +1,5 @@
 import 'dart:ffi';
 import 'dart:typed_data';
-
 import 'package:amica/providers/user_provider.dart';
 import 'package:amica/resources/firestore_methods.dart';
 import 'package:amica/utils/utils.dart';
@@ -10,8 +9,9 @@ import 'package:amica/widgtes/insert_field_cadastro.dart';
 import 'package:amica/widgtes/biography_text_field_cadastro.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
+import 'package:amica/models/pet.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class Cadastro extends StatefulWidget {
   const Cadastro({Key? key}) : super(key: key);
@@ -20,34 +20,16 @@ class Cadastro extends StatefulWidget {
   _CadastroState createState() => _CadastroState();
 }
 
-class Pet {
-  @required
-  String name;
-  @required
-  String specie;
-  @required
-  String sex;
-  int age = 0;
-  String race;
-  @required
-  String contact;
-  String biography;
-
-  Pet(this.name, this.specie, this.race, this.age, this.sex, this.contact,
-      this.biography);
-}
-
 class _CadastroState extends State<Cadastro> {
   TextEditingController nameController = TextEditingController();
-  TextEditingController specieController = TextEditingController();
   TextEditingController raceController = TextEditingController();
   TextEditingController ageController = TextEditingController();
-  TextEditingController sexController = TextEditingController();
   TextEditingController contactController = TextEditingController();
   TextEditingController biographyController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Uint8List? _file;
   bool isLoading = false;
+  String? specieDropdownValue;
+  String? sexDropdownValue;
 
   Future<void> _openGallery(BuildContext context) async {
     Uint8List file = await pickImage(ImageSource.gallery);
@@ -112,15 +94,20 @@ class _CadastroState extends State<Cadastro> {
   }
 
   void _savePet(String uid, String username) async {
+    if (_file == null) {
+      Uint8List data =
+          (await rootBundle.load('imagens/dog.png')).buffer.asUint8List();
+      _file = data;
+    }
     Pet pet = Pet(
         nameController.text,
-        specieController.text,
+        specieDropdownValue!,
         raceController.text,
         int.parse(ageController.text),
-        sexController.text,
+        sexDropdownValue!,
         contactController.text,
-        biographyController.text);
-    print(pet.name);
+        biographyController.text,
+        _file);
 
     setState(() {
       isLoading = true;
@@ -131,14 +118,13 @@ class _CadastroState extends State<Cadastro> {
       String res = await FireStoreMethods().uploadPost(
         uid,
         username,
-        nameController.text,
-        specieController.text,
-        sexController.text,
-        int.parse(ageController.text),
-        raceController.text,
-        contactController.text,
-        biographyController.text,
-        _file!,
+        pet.name,
+        pet.specie,
+        pet.sex,
+        pet.contact,
+        pet.biography,
+        pet.photo!,
+
       );
       if (res == "success") {
         setState(() {
@@ -165,13 +151,15 @@ class _CadastroState extends State<Cadastro> {
 
   void clearImage() {
     setState(() {
+
       nameController.clear();
-      specieController.clear();
+      specieDropdownValue.clear();
       raceController.clear();
       ageController.clear();
-      sexController.clear();
+      sexDropdownValue.clear();
       contactController.clear();
       biographyController.clear();
+
       _file = null;
     });
   }
@@ -214,11 +202,62 @@ class _CadastroState extends State<Cadastro> {
                         textInputType: TextInputType.name),
                   ),
                   Expanded(
-                    child: InsertFieldCadastro(
-                        textEditingController: specieController,
-                        fieldName: "Espécie",
-                        textInputType: TextInputType.text),
-                  )
+                      child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.fromLTRB(11, 5, 11, 5),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 2),
+                          child: const Text(
+                            'Espécie',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: DropdownButtonHideUnderline(
+                              child: ButtonTheme(
+                            alignedDropdown: true,
+                            child: DropdownButton<String>(
+                                alignment: Alignment.center,
+                                value: specieDropdownValue,
+                                icon: const Icon(Icons.arrow_downward),
+                                elevation: 16,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  backgroundColor: Colors.white,
+                                ),
+                                dropdownColor: Colors.white,
+                                iconEnabledColor: Colors.redAccent,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    specieDropdownValue = newValue!;
+                                  });
+                                },
+                                isDense: true,
+                                items: const <DropdownMenuItem<String>>[
+                                  DropdownMenuItem(
+                                      child: Text('Cachorro'), value: 'dog'),
+                                  DropdownMenuItem(
+                                      child: Text('Gato'), value: 'cat'),
+                                  DropdownMenuItem(
+                                      child: Text('Pássaro'), value: 'bird'),
+                                  DropdownMenuItem(
+                                      child: Text('Cobra'), value: 'snake'),
+                                ]),
+                          )),
+                        )
+                      ],
+                    ),
+                  ))
                 ],
               ),
               Row(
@@ -242,11 +281,64 @@ class _CadastroState extends State<Cadastro> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Expanded(
-                    child: InsertFieldCadastro(
-                        textEditingController: sexController,
-                        fieldName: "Sexo",
-                        textInputType: TextInputType.text),
-                  ),
+                      child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.fromLTRB(11, 5, 11, 5),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 2),
+                                child: const Text(
+                                  'Sexo',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: DropdownButtonHideUnderline(
+                                    child: ButtonTheme(
+                                        alignedDropdown: true,
+                                        child: DropdownButton<String>(
+                                          alignment: Alignment.center,
+                                          value: sexDropdownValue,
+                                          icon:
+                                              const Icon(Icons.arrow_downward),
+                                          elevation: 16,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            backgroundColor: Colors.white,
+                                          ),
+                                          dropdownColor: Colors.white,
+                                          iconEnabledColor: Colors.redAccent,
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              sexDropdownValue = newValue!;
+                                            });
+                                          },
+                                          isDense: true,
+                                          items: const <
+                                              DropdownMenuItem<String>>[
+                                            DropdownMenuItem(
+                                              child: Text('Macho'),
+                                              value: 'M',
+                                            ),
+                                            DropdownMenuItem(
+                                              child: Text('Fêmea'),
+                                              value: 'F',
+                                            )
+                                          ],
+                                        )),
+                                  ))
+                            ],
+                          ))),
                   Expanded(
                     child: InsertFieldCadastro(
                         textEditingController: contactController,
