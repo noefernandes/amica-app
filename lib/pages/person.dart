@@ -98,7 +98,7 @@ class _PersonState extends State<Person> {
                         },
                         child: Container(
                           child: CardPet(
-                            snap: snapshot.data!.docs[index].data(),
+                            snapshot.data!.docs[index].data(),
                           ),
                         ),
                       ));

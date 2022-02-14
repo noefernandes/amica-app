@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
     const Menu('snake', 'Cobras', 'imagens/svg/snake.svg'),
   ];
 
-  int active = 0;
+  int active = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +62,45 @@ class _HomeState extends State<Home> {
                   child: CircularProgressIndicator(),
                 );
               }
-              return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (ctx, index) => Container(
-                  child: CardPet(
-                    snap: snapshot.data!.docs[index].data(),
+              if (active == 0) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (ctx, index) => Container(
+                    child: CardPet(snapshot.data!.docs[index].data(), 'dog'),
                   ),
-                ),
-              );
+                );
+              }
+              if (active == 1) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (ctx, index) => Container(
+                    child: CardPet(snapshot.data!.docs[index].data(), 'cat'),
+                  ),
+                );
+              }
+              if (active == 2) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (ctx, index) => Container(
+                    child: CardPet(snapshot.data!.docs[index].data(), 'bird'),
+                  ),
+                );
+              }
+              if (active == 3) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (ctx, index) => Container(
+                    child: CardPet(snapshot.data!.docs[index].data(), 'snake'),
+                  ),
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (ctx, index) => Container(
+                    child: CardPet(snapshot.data!.docs[index].data()),
+                  ),
+                );
+              }
             },
           ),
         )

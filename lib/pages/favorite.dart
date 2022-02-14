@@ -50,7 +50,7 @@ class _FavoriteState extends State<Favorite> {
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (ctx, index) => Container(
                   child: CardPet(
-                    snap: snapshot.data!.docs[index].data(),
+                    snapshot.data!.docs[index].data(),
                   ),
                 ),
               );
