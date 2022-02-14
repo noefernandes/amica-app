@@ -23,7 +23,7 @@ class _FavoriteState extends State<Favorite> {
         SizedBox(
             height: 100,
             child: Padding(
-                padding: EdgeInsets.all(32),
+                padding: EdgeInsets.all(25),
                 child: Text(
                   'Favoritos',
                   style: GoogleFonts.baloo(
