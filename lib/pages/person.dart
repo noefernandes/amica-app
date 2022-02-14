@@ -90,6 +90,10 @@ class _PersonState extends State<Person> {
                   itemBuilder: (ctx, index) => Dismissible(
                         background: Container(
                           color: Colors.red,
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
                         ),
                         key: UniqueKey(),
                         onDismissed: (DismissDirection direction) async {
