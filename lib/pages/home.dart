@@ -25,6 +25,7 @@ class _HomeState extends State<Home> {
     const Menu('cat', 'Gatos', 'imagens/svg/cat.svg'),
     const Menu('bird', 'Passáros', 'imagens/svg/bird.svg'),
     const Menu('snake', 'Cobras', 'imagens/svg/snake.svg'),
+    const Menu('all', 'Todos', 'imagens/svg/logo.svg')
   ];
 
   int active = 5;
