@@ -33,25 +33,40 @@ class _PersonState extends State<Person> {
         SizedBox(
             height: 100,
             child: Padding(
-                padding: EdgeInsets.all(32),
+                padding: EdgeInsets.all(25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Bem vindo, ' + userProvider.getUser.username,
+                      'Olá, ' + userProvider.getUser.username + '!',
                       style: GoogleFonts.baloo(
                           fontStyle: FontStyle.normal,
-                          color: Colors.black87,
-                          fontSize: 20),
+                          color: Colors.white,
+                          fontSize: 27),
                     ),
-                    ElevatedButton(
-                      child: const Text("Sair"),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.redAccent,
-                        onPrimary: Colors.white,
-                        side: BorderSide(color: Colors.black, width: 1),
+                    Container(
+                      padding: const EdgeInsets.all(5),
+                      child: ElevatedButton(
+                        child: const Text(
+                          "Sair",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.redAccent),
+                          padding:
+                              MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                  const EdgeInsets.fromLTRB(30, 10, 30, 10)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              side: const BorderSide(color: Colors.redAccent),
+                            ),
+                          ),
+                        ),
+                        onPressed: _sair,
                       ),
-                      onPressed: _sair,
                     )
                   ],
                 ))),
@@ -75,6 +90,10 @@ class _PersonState extends State<Person> {
                   itemBuilder: (ctx, index) => Dismissible(
                         background: Container(
                           color: Colors.red,
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
                         ),
                         key: UniqueKey(),
                         onDismissed: (DismissDirection direction) async {
@@ -83,7 +102,7 @@ class _PersonState extends State<Person> {
                         },
                         child: Container(
                           child: CardPet(
-                            snap: snapshot.data!.docs[index].data(),
+                            snapshot.data!.docs[index].data(),
                           ),
                         ),
                       ));

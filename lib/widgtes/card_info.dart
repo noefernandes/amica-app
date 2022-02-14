@@ -28,6 +28,7 @@ class _CardInfoState extends State<CardInfo> {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Color(0xff4FA9A7),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
@@ -150,8 +151,8 @@ class _CardInfoState extends State<CardInfo> {
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       shape: const StadiumBorder(),
-                      side: BorderSide(width: 1, color: Colors.blue.shade600),
-                      backgroundColor: Colors.blue.shade600,
+                      side: BorderSide(width: 1, color: Color(0xff4FA9A7)),
+                      backgroundColor: Color(0xff4FA9A7),
                       fixedSize: const Size.fromWidth(180),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),

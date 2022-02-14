@@ -23,7 +23,7 @@ class _FavoriteState extends State<Favorite> {
         SizedBox(
             height: 100,
             child: Padding(
-                padding: EdgeInsets.all(32),
+                padding: EdgeInsets.all(25),
                 child: Text(
                   'Favoritos',
                   style: GoogleFonts.baloo(
@@ -50,7 +50,7 @@ class _FavoriteState extends State<Favorite> {
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (ctx, index) => Container(
                   child: CardPet(
-                    snap: snapshot.data!.docs[index].data(),
+                    snapshot.data!.docs[index].data(),
                   ),
                 ),
               );
